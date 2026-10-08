@@ -1,23 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>College Placement Portal</title>
+<title>Student Feedback</title>
 <style>
-body{font-family:Arial;background:#f4f6fa;text-align:center}
-table{margin:auto;border-collapse:collapse;background:#fff}
-th,td{border:1px solid #999;padding:8px 12px}
-th{background:#1a5fb4;color:#fff}
+body{font-family:Arial;background:#f2f4f8;text-align:center}
+form{background:#fff;display:inline-block;padding:20px;margin-top:20px;border-radius:8px;text-align:left;width:340px}
+input,select,textarea{width:100%;margin:6px 0 12px;padding:6px;box-sizing:border-box}
+button{background:#1a5fb4;color:#fff;border:0;padding:10px 20px;border-radius:4px}
+#thanks{display:none;color:#0a7a2f;font-size:20px;margin-top:15px}
+#summary{margin-top:15px;font-size:18px}
 </style>
 </head>
 <body>
-<h1>XYZ College of Engineering</h1>
-<h3>Department of Information Technology - Placement Cell</h3>
-<table>
-<tr><th>Company</th><th>Job Role</th><th>Eligibility</th><th>Package</th><th>Deadline</th></tr>
-<tr><td>TCS</td><td>Software Engineer</td><td>CGPA 6.5+, no arrears</td><td>7 LPA</td><td>30 Oct 2026</td></tr>
-<tr><td>Infosys</td><td>Systems Engineer</td><td>CGPA 6.0+, no arrears</td><td>6.5 LPA</td><td>05 Nov 2026</td></tr>
-</table>
-<h3>Placement Contact</h3>
-<p>Placement Officer: Dr. A. Kumar | placement@xyzcollege.edu | +91 98765 43210</p>
+<h1>Student Feedback Form (v2)</h1>
+<form onsubmit="return submitFeedback();">
+<label>Course Name</label><input type="text" id="course" required>
+<label>Faculty Name</label><input type="text" id="faculty" required>
+<label>Student Name</label><input type="text" id="sname" required>
+<label>Register Number</label><input type="text" id="reg" required>
+<label>Department</label><input type="text" id="dept" required>
+<label>Rating</label>
+<select id="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+<label>Feedback / Comments</label><textarea id="comments" rows="4"></textarea>
+<button type="submit">Submit</button>
+</form>
+<div id="thanks"></div>
+<div id="summary">Course rating summary: no ratings yet</div>
+<script>
+var ratings = [];
+function submitFeedback(){
+  var name = document.getElementById('sname').value;
+  var r = parseInt(document.getElementById('rating').value);
+  ratings.push(r);
+  var sum = ratings.reduce(function(a,b){return a+b;},0);
+  var avg = (sum / ratings.length).toFixed(1);
+  var t = document.getElementById('thanks');
+  t.style.display = 'block';
+  t.innerText = 'Thank you, ' + name + '! Your feedback has been submitted.';
+  document.getElementById('summary').innerText =
+    'Course rating summary: ' + ratings.length + ' response(s), average ' + avg + ' / 5';
+  return false;
+}
+</script>
 </body>
 </html>
